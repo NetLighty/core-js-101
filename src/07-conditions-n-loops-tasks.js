@@ -375,8 +375,14 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let result = '';
+  for (let i = 0; i < pathes[0].length; i += 1) {
+    if (pathes.every((path) => path[i] === pathes[0][i])) {
+      result += pathes[0][i];
+    } else return result.slice(0, result.lastIndexOf('/') + 1);
+  }
+  return result.slice(0, result.lastIndexOf('/') + 1);
 }
 
 
@@ -411,7 +417,7 @@ function getMatrixProduct(/* m1, m2 */) {
  * Function should return who is winner in the current position according to the game rules.
  * The result can be: 'X','0',undefined
  *
- * @param {array} position
+ * @param {array} pos
  * @return {string}
  *
  * @example
@@ -433,8 +439,26 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(pos) {
+  for (let i = 0; i < 3; i += 1) {
+    if (pos[0][i]) {
+      if (pos[0][i] === pos[1][i]
+        && pos[1][i] === pos[2][i]) return pos[0][i];
+    }
+    if (pos[i][0]) {
+      if (pos[i][0] === pos[i][1]
+        && pos[i][1] === pos[i][2]) return pos[i][0];
+    }
+  }
+  if (pos[0][2]) {
+    if (pos[0][2] === pos[1][1]
+      && pos[1][1] === pos[2][0]) return pos[0][2];
+  }
+  if (pos[0][0]) {
+    if (pos[0][0] === pos[1][1]
+      && pos[1][1] === pos[2][2]) return pos[0][0];
+  }
+  return undefined;
 }
 
 
